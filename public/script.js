@@ -26,7 +26,7 @@ document.getElementById('downloadButton').addEventListener('click', async (event
 // Botão de login
 document.getElementById('btnLogin').addEventListener('click', async () => {
   try {
-    const response = await fetch('http://localhost:3000/auth/url');
+    const response = await fetch('/auth/url');
     const { authUrl } = await response.json();
 
     if (!authUrl) {
@@ -57,7 +57,7 @@ document.getElementById('btnGetToken').addEventListener('click', async () => {
   }
 
   try {
-    const response = await fetch('http://localhost:3000/auth/token', {
+    const response = await fetch('/auth/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -103,7 +103,7 @@ async function consultar() {
     const limit = 500;
 
     while (true) {
-      const response = await fetch(`http://localhost:3000/liberacoes/${dateStart}/${dateEnd}/${offset}`, {
+      const response = await fetch(`/liberacoes/${dateStart}/${dateEnd}/${offset}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -132,7 +132,7 @@ async function consultar() {
       progressText.textContent = `Buscando ordem: ${lib.order.id} (${percentBar.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%)`;
 
       try {
-        const response = await fetch(`http://localhost:3000/pedido/${lib.order.id}`, {
+        const response = await fetch(`/pedido/${lib.order.id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -176,7 +176,7 @@ async function consultar() {
       progressText.textContent = `Buscando NF-e da ordem: ${res.order} (${percentBar.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%)`;
 
       try {
-        const response = await fetch(`http://localhost:3000/nfe/${Number(res.order)}`, {
+        const response = await fetch(`/nfe/${Number(res.order)}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
