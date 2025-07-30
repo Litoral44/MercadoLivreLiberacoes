@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="styles.css">
+  <title>Relatório NFe - Mercado Livre</title>
+
+</head>
+<body>
+  <div class="container">
+    <h1>Consulta Pedido & Nota Fiscal - Mercado Livre</h1>
+  
+    <!-- LOGIN -->
+    <div class="login">
+      <input type="text" id="authCode" placeholder="Cole aqui o código de autorização (code)" />
+      <div class="btnForm">
+        <button id="btnLogin">Obter Code</button>
+        <button id="btnGetToken" disabled>Obter Access Token</button>
+      </div>
+    </div>
+  
+    <!-- CONSULTA -->
+    <div class="getData">
+      <form class="form-date">
+        <label for="data-start-rel">Data inicio:</label>
+        <input type="date" id="data-start-rel" name="data-start-rel" required>
+        <label for="data-end-rel">Data final:</label>
+        <input type="date" id="data-end-rel" name="data-end-rel" required>
+  
+        <p id="state-div">Status: aguardando gerar relatório</p>
+  
+        <div class="btnForm">
+          <button id="btnConsultar">Gerar Relatório</button>
+          <button id="downloadButton" disabled="true">Baixar</button>
+        </div>
+        <div class="barProgress">
+          <div class="barInBar"></div>
+          <p class="progressText">BARRA DE PROGRESSO</p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver/dist/FileSaver.min.js"></script>
+</body>
+</html>
