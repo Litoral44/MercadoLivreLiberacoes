@@ -22,21 +22,29 @@
     <!-- CONSULTA -->
     <div class="getData">
       <form class="form-date">
-        <label for="data-start-rel">Data inicio:</label>
-        <input type="date" id="data-start-rel" name="data-start-rel" required>
-        <label for="data-end-rel">Data final:</label>
-        <input type="date" id="data-end-rel" name="data-end-rel" required>
-  
-        <p id="state-div">Status: aguardando gerar relatório</p>
-  
+        <div class="dateDiv">
+          <div class="inputColumn">
+            <label for="data-start-rel">Data inicio:</label>
+            <input type="date" id="data-start-rel" name="data-start-rel" required>
+          </div>
+          <p id="arrowRight">➔</p>
+          <div class="inputColumn">
+            <label for="data-end-rel">Data final:</label>
+            <input type="date" id="data-end-rel" name="data-end-rel" required>
+          </div>
+        </div>
+
         <div class="btnForm">
           <button id="btnConsultar">Gerar Relatório</button>
           <button id="downloadButton" disabled="true">Baixar</button>
         </div>
+
         <div class="barProgress">
           <div class="barInBar"></div>
           <p class="progressText">BARRA DE PROGRESSO</p>
         </div>
+
+        <p id="state-div">Status: aguardando gerar relatório</p>
       </form>
     </div>
   </div>
