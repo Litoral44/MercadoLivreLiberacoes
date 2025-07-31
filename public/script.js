@@ -15,7 +15,9 @@ let access_token = null;
 
 document.getElementById('btnConsultar').addEventListener('click', async (event) => {
   event.preventDefault();
+  document.getElementById('btnConsultar').disabled = true;
   await consultar();
+  document.getElementById('btnConsultar').disabled = false;
 });
 
 document.getElementById('downloadButton').addEventListener('click', async (event) => {
@@ -76,9 +78,31 @@ document.getElementById('btnGetToken').addEventListener('click', async () => {
     login.style.display = "none";
     detDataDiv.style.display = "flex";
   } catch (err) {
-    alert(`Erro ao obter token: ${err.message}`);
+    alert(`Erro ao obter token: Code inválido ou já usado. Crie um code novo e tente novamente.`);
   }
 });
+
+function validarData(valueInput) {
+  if (!valueInput) {
+    alert("Por favor, preencha a data corretamente.");
+    return false;
+  }
+
+  const data = new Date(valueInput);
+  const dataAtual = new Date();
+
+  if (isNaN(data.getTime())) {
+    alert("Data inválida: Formato errado. preencha os campos de data corretamente.");
+    return false;
+  }
+
+  if (data > dataAtual) {
+    alert("Data inválida: Você não pode selecionar uma data posterior à data de hoje.");
+    return false;
+  }
+
+  return data.getTime();
+}
 
 
 // Consultar pedido e nota
@@ -89,12 +113,21 @@ async function consultar() {
   const stateDiv = document.querySelector('#state-div');
   let percentBar = 0;
 
+  downloadButton.disabled = true;
+
+  if (!validarData(dateStart) || !validarData(dateEnd)) {
+    return; 
+  } else if (validarData(dateEnd) < validarData(dateStart)) {
+    alert("Data inválida: A data final não pode ser menor que a inicial. Coloque a mesma ou uma maior.");
+    return;
+  }
+
   if (!access_token) {
     alert('Faça o login e obtenha o token primeiro.');
     return;
   }
 
-  stateDiv.textContent = 'Status: gerando relatório';
+  stateDiv.textContent = 'Status: Gerando relatório';
 
   // liberações
   try {
@@ -217,7 +250,7 @@ async function consultar() {
     }
   }
   resultFinal = Array.from(mapa.values());
-  stateDiv.textContent = 'Status: relatório gerado e disponível para download.';
+  stateDiv.textContent = 'Status: Relatório gerado e disponível para download.';
   progressText.textContent = `100%`;
   downloadButton.disabled = false;
   return resultFinal;
@@ -265,7 +298,12 @@ async function exportarParaExcel() {
   });
 
   // Centralizar toda a coluna E (NF-e)
+  worksheet.getColumn(2).alignment = { horizontal: 'center' };
+  worksheet.getColumn(3).alignment = { horizontal: 'center' };
   worksheet.getColumn(5).alignment = { horizontal: 'center' };
+  worksheet.getColumn(6).alignment = { horizontal: 'center' };
+  worksheet.getColumn(7).alignment = { horizontal: 'center' };
+  worksheet.getColumn(8).alignment = { horizontal: 'center' };
 
   // Formatar colunas F, G e H como moeda brasileira (pt-BR)
   const formatoMoeda = 'R$ #,##0.00;[Red]-R$ #,##0.00';

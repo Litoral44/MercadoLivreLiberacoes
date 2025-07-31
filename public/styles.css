@@ -5,7 +5,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background: #121212;
+  background: #ededed;
   color: #eee;
   padding: 20px;
   min-height: 100vh;
@@ -14,18 +14,37 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
 }
 input, button {
   font-size: 16px;
   padding: 10px;
   margin: 4px 0;
   width: 100%;
-  border-radius: .25rem;
+  border-radius: .5rem;
   border: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 input {
-  background-color: #e0e0e0;
+  background: #ededed;
+  outline-color: #3483fa;
+  font-family: Arial, sans-serif;
+  font-size: .875rem;
+  box-shadow: inset 0 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+input::placeholder {
+  color: rgb(60, 60, 60);
+}
+
+label {
+  color: #000000E6;
+  font-size: .875rem;
+  padding-left: .35rem;
 }
 
 pre {
@@ -38,18 +57,41 @@ pre {
 
 h1 {
   text-align: center;
+  color: #363636;
+  font-size: 20px;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
 h2 {
   margin-top: 30px;
 }
 
+.title {
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .75rem;
+}
+
+.title img {
+  flex-shrink: 0;
+  width: 150px;
+  margin-bottom: .5rem;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  background-color: #222;
-  border-radius: .5rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.213);
+  max-width: 550px;
+  width: 100%;
+  box-shadow: 0 0px 6px 2px #0000001a;
 }
 
 .getData {
@@ -62,20 +104,13 @@ h2 {
   display: flex;
   width: 100%;
   flex-direction: column;
-}
-
-.form-date label {
-  font-weight: bold;
-  font-size: 20px;
-  display: block;
-  margin-bottom: 2px;
+  gap: .5rem;
 }
 
 .form-date input[type="date"] {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
   border-radius: .25rem;
   box-sizing: border-box;
 }
@@ -101,12 +136,51 @@ h2 {
   gap: .5rem;
 }
 
+#btnLogin {
+  background-color: #3483fa;
+  font-weight: 500;
+  color: #fff;
+}
+
+#btnGetToken {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color: #000000E6;
+}
+
+#btnGetToken:disabled {
+  opacity: .6;
+}
+
+#btnConsultar {
+  background-color: #3483fa;
+  font-weight: 500;
+  color: #fff;
+}
+
+#btnConsultar:disabled {
+  opacity: .6;
+}
+
+#downloadButton {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color: #000000E6;
+}
+
+#downloadButton:disabled {
+  opacity: .6;
+}
+
 #state-div {
-  display: flex;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  font-size: 14px;
   padding: .5rem;
-  background-color: rgb(27, 27, 27);
-  border-radius: .25rem;
-  margin: .5rem 0;
+  border: 1px solid #0000004d;
+  border-radius: 0.25rem;
 }
 
 .barProgress {
@@ -114,10 +188,11 @@ h2 {
   display: flex;
   width: 100%;
   height: 30px;
-  background-color: #e0e0e0;
+  background-color: #ededed;
   padding: .125rem;
-  border-radius: .25rem;
+  border-radius: .35rem;
   margin-top: .5rem;
+  box-shadow: inset 0 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .barInBar {
@@ -156,9 +231,35 @@ h2 {
   flex: 1;
 }
 
-#arrowRight {
+.instrucoes {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  margin-top: .5rem;
+  font-size: 14px;
+  padding: .5rem;
+  border: 1px solid #0000004d;
+  border-radius: 0.5rem;
+}
+
+.instrucoes code {
+  background-color: #dcdcdc;
+  padding: 2px 4px;
+  font-family: monospace;
+  border-radius: 3px;
+}
+
+.login {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translateY(10px);
+  flex-direction: column;
+}
+
+fieldset {
+  border-radius: .25rem;
+  border: 1px solid #0000004d;
+}
+
+legend {
+  color: #333;
 }

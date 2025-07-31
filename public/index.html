@@ -3,50 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="stylesheet" href="styles.css">
-  <title>Relatório NFe - Mercado Livre</title>
+  <title>Liberações - Mercado Livre</title>
 
 </head>
 <body>
   <div class="container">
-    <h1>Consulta Pedido & Nota Fiscal - Mercado Livre</h1>
-  
+    <div class="title">
+      <img src="./mercado-livre-logo-8.png" alt="Logo Mercado Livre">
+      <h1>Consulta de Liberações</h1>
+    </div>
     <!-- LOGIN -->
     <div class="login">
-      <input type="text" id="authCode" placeholder="Cole aqui o código de autorização (code)" />
+      <label for="authCode">Code</label>
+      <input
+      type="text"
+      name="authCode"
+      id="authCode"
+      placeholder="Cole aqui o código de autorização (code)"
+      autocomplete="off"
+      required
+      title="Cole seu code aqui"
+      />
       <div class="btnForm">
-        <button id="btnLogin">Obter Code</button>
-        <button id="btnGetToken" disabled>Obter Access Token</button>
+        <button id="btnLogin" title="Logar no Mercado Livre / gerar code">Obter Code</button>
+        <button id="btnGetToken" title="Validar token para ir para o gerador de relatórios" disabled>Obter Access Token</button>
       </div>
+
+      <p class="instrucoes">
+        <strong>Como obter o Code?</strong><br>
+        Clique no botão <strong>"Obter Code"</strong>. Uma nova janela será aberta. Quando a página terminar de carregar, observe o link da aba — ele será algo parecido com:<br>
+        <code>https://www.google.com/?code=TG-688b637a0d08c90001d5bb36-1380909494</code><br>
+        Você deve copiar <strong>somente a parte após <code>code=</code></strong>, ou seja:<br>
+        <code>TG-688b637a0d08c90001d5bb36-1380909494</code><br>
+        Cole esse código na caixa de texto acima e clique em <strong>"Obter Access Token"</strong>. Você será redirecionado para a tela onde poderá gerar o relatório.
+      </p>
+      
     </div>
   
     <!-- CONSULTA -->
     <div class="getData">
       <form class="form-date">
-        <div class="dateDiv">
+        
+        <!-- Seção de datas -->
+        <fieldset class="dateDiv">
+          <legend>Período do Relatório</legend>
           <div class="inputColumn">
-            <label for="data-start-rel">Data inicio:</label>
-            <input type="date" id="data-start-rel" name="data-start-rel" required>
+            <label for="data-start-rel">Data início:</label>
+            <input type="date" id="data-start-rel" name="data-start-rel" title="Insira a data inicial do relatório" required>
           </div>
-          <p id="arrowRight">➔</p>
           <div class="inputColumn">
             <label for="data-end-rel">Data final:</label>
-            <input type="date" id="data-end-rel" name="data-end-rel" required>
+            <input type="date" id="data-end-rel" name="data-end-rel" title="Insira a data final do relatório" required>
           </div>
-        </div>
-
+        </fieldset>
+    
+        <!-- Seção de botões -->
         <div class="btnForm">
-          <button id="btnConsultar">Gerar Relatório</button>
-          <button id="downloadButton" disabled="true">Baixar</button>
+          <button id="btnConsultar" title="Gerar relatório">Gerar Relatório</button>
+          <button id="downloadButton" title="Fazer download" disabled>&#x1F4E5; Download</button>
         </div>
-
+    
+        <!-- Status -->
+        <p id="state-div">📌 Status: aguardando gerar relatório</p>
+    
+        <!-- Barra de progresso -->
         <div class="barProgress">
           <div class="barInBar"></div>
-          <p class="progressText">BARRA DE PROGRESSO</p>
+          <p class="progressText">Barra de progresso</p>
         </div>
-
-        <p id="state-div">Status: aguardando gerar relatório</p>
+    
       </form>
     </div>
+    
   </div>
 
   <script src="./script.js"></script>
