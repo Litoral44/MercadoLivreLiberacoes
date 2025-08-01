@@ -131,11 +131,13 @@ async function consultar() {
 
   // liberações
   try {
+    let restanteLib;
     let liberacoes = [];
     let offset = 0;
     const limit = 500;
 
     while (true) {
+      progressText.textContent = `Buscando ordens`;
       const response = await fetch(`/liberacoes/${dateStart}/${dateEnd}/${offset}`, {
         method: 'POST',
         headers: {
@@ -154,15 +156,16 @@ async function consultar() {
       offset += limit;
     }
     orders = liberacoes;
-    console.log(liberacoes);
+    progressText.textContent = `Filtrando ordens`;
     const liberacoesFilter = liberacoes.filter(item => item.description !== 'marketplace_shipment' && !item.external_reference.startsWith("cashback_"));
-    console.log(liberacoesFilter);
 
     const quantLib = liberacoesFilter.length;
     const percentLib = (100 / quantLib) / 2;
 
+    restanteLib = quantLib;
+
     for (const lib of liberacoesFilter) {
-      progressText.textContent = `Buscando ordem: ${lib.order.id} (${percentBar.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%)`;
+      progressText.textContent = `Buscando ordem: ${lib.order.id} (${percentBar.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}% | ${restanteLib} restantes)`;
 
       try {
         const response = await fetch(`/pedido/${lib.order.id}`, {
@@ -175,7 +178,7 @@ async function consultar() {
 
         const data = await response.json();
 
-        const dateFormated = lib.money_release_date.slice(0, 10);
+        const dateFormated = moment(lib.money_release_date).tz('America/Sao_Paulo').format().slice(0, 10);
         const [ano, mes, dia] = dateFormated.split('-');
         const dataBR = `${dia}/${mes}/${ano}`;
 
@@ -199,14 +202,16 @@ async function consultar() {
 
         percentBar = percentBar + percentLib;
         barInBar.style.width = `${percentBar}%`
-
+        restanteLib = restanteLib - 1;
       } catch (e) {
         console.error('Erro ao consultar pedido:', e.message);
       }
     };
 
+    restanteLib = quantLib;
+
     for (const res of resultado) {
-      progressText.textContent = `Buscando NF-e da ordem: ${res.order} (${percentBar.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%)`;
+      progressText.textContent = `Buscando NF-e da ordem: ${res.order} (${percentBar.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}% | ${restanteLib} restantes)`;
 
       try {
         const response = await fetch(`/nfe/${Number(res.order)}`, {
@@ -223,6 +228,7 @@ async function consultar() {
 
         percentBar = percentBar + percentLib;
         barInBar.style.width = `${percentBar}%`
+        restanteLib = restanteLib - 1;
       } catch (e) {
         console.error('Erro ao consultar pedido:', e.message);
       }
@@ -251,7 +257,7 @@ async function consultar() {
   }
   resultFinal = Array.from(mapa.values());
   stateDiv.textContent = 'Status: Relatório gerado e disponível para download.';
-  progressText.textContent = `100%`;
+  progressText.textContent = `Concluído`;
   downloadButton.disabled = false;
   return resultFinal;
 }
